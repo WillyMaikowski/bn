@@ -34,7 +34,9 @@ if len(d) == 0:
     sys.exit()
 print d
 
-no_records = d['no_records']
+# por lo que se ve, hay que usar el numero de entries
+#no_records = d['no_records']
+no_entries = d['no_entries']
 set_number = d['set_number']
 i = 1
 bad_words = []
@@ -42,7 +44,7 @@ bad_words = []
 open(output, 'w').close()
 newfile = open(output, 'a');
 # realizar ciclo que recupere de 100 en 100 los registros
-while i <= no_records+99:
+while i <= no_entries+99:
     config = {
         'op': 'present',
         'set_entry': str(i)+'-'+str(i+99),
