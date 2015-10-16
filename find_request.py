@@ -21,7 +21,9 @@ class find_request(request):
 		for child in xml:
 		    if child.tag in ( 'error', 'session-id' ): continue
 		    #set_number, no_records, no_entries
-		    setattr(find_request, child.tag , child.text)
+		    d[child.tag] = int( child.text )
+
+		    #setattr(find_request, child.tag , child.text)
 		return d
 
 
