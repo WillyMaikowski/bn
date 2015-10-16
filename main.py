@@ -6,5 +6,5 @@ config = {
     'base': 'BNC01'
 }
 request = FindRequest(base_url=url, config=config)
-request = request.find(name="raul")
+request = request.find(name="Cortazar, Julio")
 print request

@@ -7,7 +7,7 @@ class FindRequest(Request):
         super(FindRequest, self).__init__(base_url, config)
         self.config['op'] = 'find'
 
-    # busca al personaje "name"	y retorna un diccionario con los datos respectivos
+    # busca al personaje "name" y retorna un diccionario con los datos respectivos
     # las variables base url y config son opcionales
     def find(self, name, base_url=None, config=None):
         if base_url:

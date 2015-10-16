@@ -23,6 +23,7 @@ res.raise_for_status()
 
 xml = _et.fromstring( res.content )
 d = {}
+# TODO usar clase Request
 for child in xml:
     if child.tag in ( 'error', 'session-id' ): continue
     #set_number, no_records, no_entries

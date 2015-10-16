@@ -1,5 +1,5 @@
 from request import Request
-import xml.etree.ElementTree as _et
+# import xml.etree.ElementTree as _et
 
 
 class PresentRequest(Request):
