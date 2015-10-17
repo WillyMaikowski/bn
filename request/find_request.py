@@ -3,7 +3,7 @@ import xml.etree.ElementTree as _Et
 
 
 class FindRequest(Request):
-    def __init__(self, base_url='', config=''):
+    def __init__(self, base_url='', config={}):
         super(FindRequest, self).__init__(base_url, config)
         self.config['op'] = 'find'
 
