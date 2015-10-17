@@ -1,6 +1,7 @@
 from request.find_request import FindRequest
 from request.present_request import PresentRequest
 
+# TODO: Como lo haremos para todas las autoridades? encapsulamos esto en una clase person_etl?
 author = 'Cortazar, Julio'  # sys.argv[1]
 
 url = 'http://www.bncatalogo.cl/X'
@@ -24,6 +25,8 @@ while request.remain_data:
     # Somehow add the data to the graph
     rdf_graph.add(author_data)
     # If the data crosses some threshold, flush it
+    # IMPORTANT NOTE: probably a single authority cant cause run out the memory
+    # maybe this is needed in an upper level
     if rdf_graph.fullMemory():
         rdf_graph.writetoTTL()
 # Last flush
