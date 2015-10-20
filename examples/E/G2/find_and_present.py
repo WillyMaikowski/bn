@@ -1,8 +1,9 @@
-from request.find_request import FindRequest
-from request.present_request import PresentRequest
+import xml.etree.ElementTree as _Et
 
-# TODO: Como lo haremos para todas las autoridades? encapsulamos esto en una clase person_etl?
-author = 'Cortazar, Julio'  # sys.argv[1]
+from ETL.E.G2.request.find_request import FindRequest
+from ETL.E.G2.request.present_request import PresentRequest
+
+author = 'Cortazar, Julio'
 
 url = 'http://www.bncatalogo.cl/X'
 
@@ -11,7 +12,6 @@ metadata = request.find(name=author)
 
 print 'Metadata: ' + str(metadata)
 
-# no_records = d['no_records']
 no_entries = metadata['no_entries']
 author_id = metadata['set_number']
 
@@ -22,6 +22,7 @@ rdf_graph = ''  # authority_graph
 
 while request.remain_data():
     author_data = request.get_chunk()
+    print _Et.dump(author_data)
     # Somehow add the data to the graph
     # rdf_graph.add(author_data)
     # If the data crosses some threshold, flush it

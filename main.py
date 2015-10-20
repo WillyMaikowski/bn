@@ -1,4 +1,4 @@
-from request.find_request import FindRequest
+from ETL.E.G2 import FindRequest
 
 url = 'http://www.bncatalogo.cl/X'
 
