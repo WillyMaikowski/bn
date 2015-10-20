@@ -7,10 +7,6 @@ class Request(object):
         self.config = config
 
     def send(self):
-        return r.get(self.base_url, params=self.config)
-
-    def set_config(self, config):
-        self.config = config
-
-    def set_base_url(self, base_url):
-        self.base_url = base_url
+        response = r.get(self.base_url, params=self.config)
+        response.raise_for_status()
+        return response
