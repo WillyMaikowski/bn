@@ -26,6 +26,7 @@ author_data = ''
 while request.remain_data():
     # se obtiene un trozo del XML
     author_data += request.get_chunk(author_id=author_id)
+    # Si ya hay max_entries registros en el string o no hay mas por leer, se escribe en el archivo
     if(request.current_entry % request.max_entries == 1 or request.current_entry >= request.no_entries):
         # filtrar palabras no deseadas para no ser incluidas en el xml
         if request.current_entry == 1:
