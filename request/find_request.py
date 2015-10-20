@@ -12,8 +12,8 @@ class FindRequest(Request):
     def find(self, name):
         """
         Gets the metadata for the author in name.
-        :param name: Author id.
-        :return: A dictionary with the respective metadata
+        :param name: String with author name. For example 'Cortazar, Julio'.
+        :return: A dictionary with the respective metadata.
         """
         self.config['request'] = name
         response = self.send()

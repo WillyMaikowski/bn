@@ -19,7 +19,6 @@ class PresentRequest(Request):
         :return: An xml.etree.ElementTree object with the data.
         """
         # TODO: Maybe throw error when no data remains
-        print self.config
         response = self.send()
         xml = _Et.fromstring(response.content)
         self.current_entry = min(self.no_entries + 1, self.current_entry + self.chunk_size)

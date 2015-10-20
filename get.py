@@ -22,7 +22,6 @@ rdf_graph = ''  # authority_graph
 
 while request.remain_data():
     author_data = request.get_chunk()
-    print author_data
     # Somehow add the data to the graph
     # rdf_graph.add(author_data)
     # If the data crosses some threshold, flush it
