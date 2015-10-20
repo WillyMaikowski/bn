@@ -3,13 +3,18 @@ import xml.etree.ElementTree as _Et
 
 
 class FindRequest(Request):
-    def __init__(self, base_url='', config={}):
-        super(FindRequest, self).__init__(base_url, config)
+    def __init__(self, base_url=''):
+        super(FindRequest, self).__init__(base_url, {})
         self.config['op'] = 'find'
+        self.config['code'] = 'wau'
+        self.config['base'] = 'BNC01'
 
-    # busca al personaje "name" y retorna un diccionario con los datos respectivos
-    # las variables base url y config son opcionales
     def find(self, name):
+        """
+        Gets the metadata for the author in name.
+        :param name: String with author name. For example 'Cortazar, Julio'.
+        :return: A dictionary with the respective metadata.
+        """
         self.config['request'] = name
         response = self.send()
         xml = _Et.fromstring(response.content)
