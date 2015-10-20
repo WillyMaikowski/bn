@@ -2,7 +2,7 @@ from request.find_request import FindRequest
 from request.present_request import PresentRequest
 
 # TODO: Como lo haremos para todas las autoridades? encapsulamos esto en una clase person_etl?
-author = "Neruda, Pablo"  # sys.argv[1]
+author = "Cortazar, Julio"  # sys.argv[1]
 output = 'authority_' + author.replace(', ','_') + '.xml'
 
 url = 'http://www.bncatalogo.cl/X'

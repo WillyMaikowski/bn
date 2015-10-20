@@ -9,7 +9,7 @@ class PresentRequest(Request):
         self.no_entries = no_entries
         self.chunk_size = 100
         self.current_entry = 1
-        self.config['set_entry'] = str(self.current_entry) + '-' + str(self.current_entry+99)
+        self.config['set_entry'] = str(self.current_entry) + '-' + str(self.current_entry + self.chunk_size - 1)
 
 
     def get_chunk(self, author_id):
@@ -17,7 +17,6 @@ class PresentRequest(Request):
         self.config['set_number'] = author_id
         self.config['set_entry'] = str(self.current_entry) + '-' + str(self.current_entry+99)        
         print self.config
-        # TODO: no funciona esta wea, me tira un xml todo mula
         response = self.send()
         '''
         xml = _Et.fromstring(response.content)
@@ -29,8 +28,8 @@ class PresentRequest(Request):
         self.current_entry = min(self.no_entries, self.current_entry + self.chunk_size)
         self.next_entry += self.chunk_size
         '''
-        self.current_entry += 100
+        self.current_entry = min(self.no_entries, self.current_entry + self.chunk_size)
         return response.content
 
     def remain_data(self):
-        return self.current_entry <= self.no_entries+99
+        return self.current_entry < self.no_entries
