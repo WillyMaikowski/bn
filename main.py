@@ -1,5 +1,5 @@
 from ETL.E.G2.request.find_request import FindRequest
-from authors import Authors
+from ETL.E.G1.authors import Authors
 import os
 
 authors = Authors()
