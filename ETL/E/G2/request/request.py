@@ -3,6 +3,10 @@ import requests as r
 
 class Request(object):
     def __init__(self, base_url, config):
+        assert isinstance(base_url, str), \
+            "base_url must be a string: %r" % base_url
+        assert isinstance(base_url, str), \
+            "config must be a dictionary: %r" % config
         self.base_url = base_url
         self.config = config
 

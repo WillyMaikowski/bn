@@ -4,6 +4,8 @@ import xml.etree.ElementTree as _Et
 
 class FindRequest(Request):
     def __init__(self, base_url=''):
+        assert isinstance(base_url, str), \
+            "base_url must be a string: %r" % base_url
         super(FindRequest, self).__init__(base_url, {})
         self.config['op'] = 'find'
         self.config['code'] = 'wau'
@@ -15,6 +17,8 @@ class FindRequest(Request):
         :param name: String with author name. For example 'Cortazar, Julio'.
         :return: A dictionary with the respective metadata.
         """
+        assert isinstance(name, str), \
+            "name must be a string"
         self.config['request'] = name
         response = self.send()
         xml = _Et.fromstring(response.content)

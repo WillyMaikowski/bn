@@ -3,7 +3,13 @@ import xml.etree.ElementTree as _Et
 
 
 class PresentRequest(Request):
-    def __init__(self, base_url='', no_entries=0, author_id=''):
+    def __init__(self, author_id, base_url='', no_entries=0):
+        assert isinstance(author_id, int), \
+            "author_id must be an integer: %r" % author_id
+        assert isinstance(base_url, str), \
+            "base_url must be a string: %r" % base_url
+        assert isinstance(no_entries, int), \
+            "no_entries must be an integer: %r" % no_entries
         super(PresentRequest, self).__init__(base_url, {})
         self.config['op'] = 'present'
         self.config['set_number'] = author_id

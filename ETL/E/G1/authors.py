@@ -11,6 +11,8 @@ class Authors(object):
         Adds authors from an XML with an specific structure.
         :param filename: name of the XML file.
         """
+        assert isinstance(filename, str), \
+            "filename must be a string: %r" % filename
         for event, elem in ET.iterparse(filename, events=('start', 'end', 'start-ns', 'end-ns')):
             if event != 'end':
                 continue
