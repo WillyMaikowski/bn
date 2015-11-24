@@ -6,7 +6,7 @@ for dirpath, dnames, fnames in os.walk("./mch/"):
     for f in fnames:
         if f.endswith(".xml"):
             print os.path.join(dirpath, f)
-            authors.addFromXML(os.path.join(dirpath, f))
+            authors.add_from_xml(os.path.join(dirpath, f))
 
 # print authors
 # print '*** Numero de autores ***'
