@@ -8,7 +8,6 @@ for dirpath, dnames, fnames in os.walk("./mch/"):
             print os.path.join(dirpath, f)
             authors.add_from_xml(os.path.join(dirpath, f))
 
-authors.add_from_xml(2)
 # print authors
 # print '*** Numero de autores ***'
 print len(authors)
