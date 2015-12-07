@@ -1,16 +1,20 @@
 import rdflib as rdf
 import xml.etree.ElementTree as ET
 
+
 class Transformer(object):
-    def __init__(self, config, resource_uri, prefixes={}):
+    def __init__(self, config, resource_uri, uri_identifier='', prefixes={}):
         assert isinstance(config, dict), \
             "config must be a dictionary: %r" % config
         assert isinstance(resource_uri, str), \
             "resource_uri must be a string: %r" % resource_uri
+        assert isinstance(uri_identifier, str), \
+            "uri_identifier must be a string: %r" % uri_identifier
         assert isinstance(prefixes, dict), \
             "prefixes must be a dictionary: %r" % prefixes
         self.config = config
         self.resource_uri = resource_uri
+        self.uri_identifier = uri_identifier
         self.prefixes = prefixes
 
     def transform(self, xml_data):
@@ -24,15 +28,18 @@ class Transformer(object):
         graph = rdf.Graph()
         xpaths = self.config.keys()
         values = []
+        i = 0
+        resource_id = 0
         for xpath in xpaths:
+            if xpath == self.uri_identifier:
+                resource_id = i
             values.append(xml_data.findall(xpath))
-        counter = 0
+            i += 1
         for i in range(len(values[0])):
-            subject = rdf.URIRef(self.resource_uri + str(counter))
+            subject = rdf.URIRef(self.resource_uri + values[resource_id][i].text)
             for j in range(len(values)):
                 prefix = self.prefixes[self.config[xpaths[j]]["prefix"]]
                 predicate = rdf.term.URIRef(prefix + self.config[xpaths[j]]["property"])
                 literal = rdf.Literal(values[j][i].text)
                 graph.add((subject, predicate, literal))
-            counter += 1
         return graph
