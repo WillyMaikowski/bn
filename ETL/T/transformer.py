@@ -1,5 +1,6 @@
 import rdflib as rdf
 import xml.etree.ElementTree as ET
+from unidecode import unidecode
 
 
 class Transformer(object):
@@ -27,19 +28,36 @@ class Transformer(object):
             "xml_data must be an instance of xml.etree.ElementTree: %r" % xml_data
         graph = rdf.Graph()
         xpaths = self.config.keys()
+        xpaths.remove("loop")
+
+        author_elements = xml_data.findall(self.config["loop"])
         values = []
-        i = 0
-        resource_id = 0
-        for xpath in xpaths:
-            if xpath == self.uri_identifier:
-                resource_id = i
-            values.append(xml_data.findall(xpath))
-            i += 1
-        for i in range(len(values[0])):
-            subject = rdf.URIRef(self.resource_uri + values[resource_id][i].text.replace(" ","_"))
-            for j in range(len(values)):
+        for element in author_elements:
+            a_list = []
+            for xpath in xpaths:
+                value = element.find(xpath)
+                if value is None:
+                    continue
+                a_list.append(value)
+            values.append(a_list)
+
+        resource_id = xpaths.index(self.uri_identifier)
+
+        for i in range(len(values)):
+            for j in range(len(values[i])):
+                if "&lt;" in values[i][resource_id].text:
+                    continue
+                subject = rdf.URIRef(
+                    unidecode(
+                        unicode(
+                            self.resource_uri +
+                            values[i][resource_id].text.replace(" ", "_").replace("\"", "")
+                        )
+                    )
+                )
                 prefix = self.prefixes[self.config[xpaths[j]]["prefix"]]
                 predicate = rdf.term.URIRef(prefix + self.config[xpaths[j]]["property"])
-                literal = rdf.Literal(values[j][i].text)
+                literal = rdf.Literal(values[i][j].text)
                 graph.add((subject, predicate, literal))
+
         return graph

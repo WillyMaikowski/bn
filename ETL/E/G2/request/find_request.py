@@ -18,7 +18,7 @@ class FindRequest(Request):
         :return: A dictionary with the respective metadata.
         """
         assert isinstance(name, str), \
-            "name must be a string"
+            "name must be a string: %r" % name
         self.config['request'] = name
         response = self.send()
         xml = _Et.fromstring(response.content)

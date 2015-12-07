@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import xml.etree.ElementTree as ET
+from unidecode import unidecode
 
 
 class Authors(object):
@@ -17,7 +18,7 @@ class Authors(object):
             if event != 'end':
                 continue
             if elem.tag == 'property-value' and elem.get('pnid') == '551':
-                name = elem.get('name')
+                name = unidecode(unicode(elem.get('name')))
                 if name not in self.names:
                     self.names[name] = 0
                 self.names[name] += 1

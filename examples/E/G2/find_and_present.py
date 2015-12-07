@@ -3,7 +3,7 @@ import xml.etree.ElementTree as _Et
 from ETL.E.G2.request.find_request import FindRequest
 from ETL.E.G2.request.present_request import PresentRequest
 
-author = 'Cortazar, Julio'
+author = 'Palma, Martin'
 
 url = 'http://www.bncatalogo.cl/X'
 

@@ -1,0 +1,3 @@
+{"loop": "present/record/metadata/oai_marc",
+  "varfield[@id='245']/subfield[@label='a']": {"prefix": "dct" , "property": "title"},
+  "varfield[@id='100']/subfield[@label='a']": {"prefix": "dct" , "property": "author"}}
