@@ -1,0 +1,2 @@
+{"book/author": {"prefix": "foaf", "property": "name"},
+  "book/title": {"prefix": "foaf", "property": "primaryTopic"}}
