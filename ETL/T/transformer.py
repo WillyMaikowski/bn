@@ -36,7 +36,7 @@ class Transformer(object):
             values.append(xml_data.findall(xpath))
             i += 1
         for i in range(len(values[0])):
-            subject = rdf.URIRef(self.resource_uri + values[resource_id][i].text)
+            subject = rdf.URIRef(self.resource_uri + values[resource_id][i].text.replace(" ","_"))
             for j in range(len(values)):
                 prefix = self.prefixes[self.config[xpaths[j]]["prefix"]]
                 predicate = rdf.term.URIRef(prefix + self.config[xpaths[j]]["property"])

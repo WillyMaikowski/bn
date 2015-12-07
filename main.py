@@ -1,23 +1,17 @@
-from ETL.E.G2.request.find_request import FindRequest
-from ETL.E.G1.authors import Authors
-import os
+from ETL.T.transformer import Transformer
+import xml.etree.ElementTree as ET
+import json
+import logging
 
-authors = Authors()
-# authors.addFromXML('mch/000 - 999.xml')
-# Dejo comentada esta parte, pues con todos los archivos que hay, el proceso es algo lento.
-for dirpath, dnames, fnames in os.walk("./mch/"):
-    for f in fnames:
-        if f.endswith(".xml"):
-            print os.path.join( dirpath, f )
-            authors.add_from_xml( os.path.join( dirpath, f ) )
+logging.basicConfig()
 
-#print authors
-#print '*** Numero de autores ***'
-print len( authors )
+xml = ET.parse("data/000 - 999.xml")
+with open("config.json", "r") as fp:
+    config = json.load(fp)
+t = Transformer(config, "http://example.com/", "article/properties/property/property-value[@pnid='551']", {"foaf": "http://xmlns.com/foaf/0.1/"})
+g = t.transform(xml)
 
-'''
-url = 'http://www.bncatalogo.cl/X'
-request = FindRequest(base_url=url)
-request = request.find(name='Cortazar, Julio')
-print request
-'''
+# Iterate over triples in store and print them out.
+print("--- printing raw triples ---")
+for s, p, o in g:
+    print(s, p, o)
