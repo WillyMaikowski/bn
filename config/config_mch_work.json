@@ -1,7 +1,8 @@
 {"loop": "article",
   "name": {"prefix": "dct", "property": "title"},
-  "properties/property/property-value[@pnid='522']": {"prefix": "dct" , "property": "memberOf"},
-  "properties/property/property-value[@pnid='551']": {"prefix": "dct" , "property": "author"},
+  "properties/property/property-value[@pnid='522']": {"prefix": "dct" , "property": "memberOf", "class_uri": "http://example.com/categoria/"},
+  "properties/property/property-value[@pnid='525']": {"prefix": "dct" , "property": "memberOf", "class_uri": "http://example.com/tema/"},
+  "properties/property/property-value[@pnid='551']": {"prefix": "dct" , "property": "author", "class_uri": "http://example.com/autoridad/"},
   "properties/property/property-value[@pnid='559']": {"prefix": "dct" , "property": "date"},
   "$EXTRA": [{"prefix": "rdfs" , "property": "type", "value": {"prefix": "ex" , "property": "CreativeWork" }}]
 }

@@ -39,8 +39,6 @@ class Transformer(object):
             a_list = []
             for xpath in xpaths:
                 value = element.find(xpath)
-                # if value is None:
-                #    continue
                 a_list.append((self.config[xpath], value))
             if len(a_list) == 0:
                 continue
@@ -51,26 +49,43 @@ class Transformer(object):
         for i in range(len(values)):
             if values[i][resource_id][1] is None:
                 continue
-            if "&lt;" in values[i][resource_id][1].text:
+            if ">" in values[i][resource_id][1].text:
                 continue
             if "^" in values[i][resource_id][1].text:
                 continue
             if "[" in values[i][resource_id][1].text:
                 continue
+            if "&lt;br" in values[i][resource_id][1].text:
+                continue
             for j in range(len(values[i])):
                 if values[i][j][1] is None:
                     continue
-                subject = rdf.URIRef(
-                    unidecode(
-                        unicode(
-                            self.resource_uri +
-                            values[i][resource_id][1].text.strip().replace(" ", "_").replace("\"", "")
-                        )
+                subject_uri = unidecode(
+                    unicode(
+                        self.resource_uri + values[i][resource_id][1].text.strip().replace(" ", "_").replace("\"", "")
                     )
                 )
+                '''
+                TODO: HACK para quitar la coma final. En aleph los nombres de los autores salen con una coma final,
+                en mch no. Deberia resolverse de otro modo
+                '''
+                # if subject_uri[-1] == ",":
+                #    subject_uri = subject_uri[0:len(subject_uri)-1]
+                # if subject_uri[-1] == "/":
+                #    subject_uri = subject_uri[0:len(subject_uri)-1]
+                #    subject_uri.strip("_")
+                subject = rdf.term.URIRef(subject_uri)
                 prefix = self.prefixes[values[i][j][0]["prefix"]]
                 predicate = rdf.term.URIRef(prefix + values[i][j][0]["property"])
                 if "class_uri" in values[i][j][0]:
+                    if ">" in values[i][j][1].text:
+                        continue
+                    if "^" in values[i][j][1].text:
+                        continue
+                    if "[" in values[i][j][1].text:
+                        continue
+                    if "&lt;br" in values[i][j][1].text:
+                        continue
                     resource_uri = unidecode(
                         unicode(
                             values[i][j][0]["class_uri"] + values[i][j][1].text.strip().replace(" ", "_").replace("\"", "")
@@ -80,22 +95,42 @@ class Transformer(object):
                     TODO: HACK para quitar la coma final. En aleph los nombres de los autores salen con una coma final,
                     en mch no. Deberia resolverse de otro modo
                     '''
-                    if resource_uri[-1] == ",":
-                        resource_uri = resource_uri[0:len(resource_uri)-1]
+                    # if resource_uri[-1] == ",":
+                    #    resource_uri = resource_uri[0:len(resource_uri)-1]
+                    # if resource_uri[-1] == "/":
+                    #    resource_uri = resource_uri[0:len(resource_uri)-1]
+                    #    resource_uri.strip("_")
                     resource_object = rdf.term.URIRef(resource_uri)
                 else:
                     resource_object = rdf.Literal(values[i][j][1].text.strip())
                 graph.add((subject, predicate, resource_object))
             if "$EXTRA" in self.config:
                 for extra in self.config["$EXTRA"]:
-                    subject = rdf.URIRef(
-                        unidecode(
-                            unicode(
-                                self.resource_uri +
-                                values[i][resource_id][1].text.strip().replace(" ", "_").replace("\"", "")
-                            )
+                    if values[i][j][1] is None:
+                        continue
+                    if ">" in values[i][j][1].text:
+                        continue
+                    if "^" in values[i][j][1].text:
+                        continue
+                    if "[" in values[i][j][1].text:
+                        continue
+                    if "&lt;br" in values[i][j][1].text:
+                        continue
+                    subject_uri = unidecode(
+                        unicode(
+                            self.resource_uri + values[i][j][1].text.strip().replace(" ", "_").replace("\"", "")
                         )
                     )
+                    '''
+                    TODO: HACK para quitar la coma final. En aleph los nombres de los autores salen con una coma final,
+                    en mch no. Deberia resolverse de otro modo
+                    '''
+                    # if subject_uri[-1] == ",":
+                    #    subject_uri = subject_uri[0:len(subject_uri)-1]
+                    # if subject_uri[-1] == "/":
+                    #    subject_uri = subject_uri[0:len(subject_uri)-1]
+                    #    subject_uri.strip("_")
+                    subject = rdf.term.URIRef(subject_uri)
                     prefix = self.prefixes[extra["prefix"]]
                     predicate = rdf.term.URIRef(prefix + extra["property"])
                     resource_object = rdf.term.URIRef(self.prefixes[extra["value"]["prefix"]] + extra["value"]["property"])

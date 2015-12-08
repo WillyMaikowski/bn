@@ -1,0 +1,8 @@
+{"loop": "present/record/metadata/oai_marc",
+  "varfield[@id='100']/subfield[@label='a']": {"prefix": "dct" , "property": "author", "class_uri": "http://example.com/persona/" },
+  "varfield[@id='245']/subfield[@label='a']": {"prefix": "dct" , "property": "title"},
+  "varfield[@id='246']/subfield[@label='a']": {"prefix": "dct" , "property": "alternative"},
+  "varfield[@id='600']/subfield[@label='a']": {"prefix": "dct" , "property": "references", "class_uri": "http://example.com/persona/"},
+  "varfield[@id='700']/subfield[@label='a']": {"prefix": "dct" , "property": "contributor", "class_uri": "http://example.com/persona/"},
+  "$EXTRA": [{"prefix": "rdfs" , "property": "type", "value": {"prefix": "ex" , "property": "CreativeWork" }}]
+}

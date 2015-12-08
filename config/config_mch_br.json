@@ -1,7 +1,7 @@
 {"loop": "article",
-  "name": {"prefix": "dct", "property": "isFormatOf", "class_uri": "http://example.com/"},
+  "name": {"prefix": "dct", "property": "isFormatOf", "class_uri": "http://example.com/obra/"},
   "properties/property/property-value[@pnid='527']": {"prefix": "dct" , "property": "publisher"},
-  "properties/property/property-value[@pnid='550']": {"prefix": "dct" , "property": "source"},
+  "properties/property/property-value[@pnid='550']": {"prefix": "dct" , "property": "source", "class_uri": ""},
   "properties/property/property-value[@pnid='566']": {"prefix": "dct" , "property": "type"},
   "properties/property/property-value[@pnid='567']": {"prefix": "dct" , "property": "format"},
   "$EXTRA": [{"prefix": "rdfs" , "property": "type", "value": {"prefix": "dct" , "property": "BibliographicResource" }}]
