@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import xml.etree.ElementTree as ET
+
 from unidecode import unidecode
 
 
@@ -28,3 +29,6 @@ class Authors(object):
 
     def __len__(self):
         return len(self.names)
+
+    def __iter__(self):
+        return iter(self.names.keys())

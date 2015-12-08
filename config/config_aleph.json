@@ -1,3 +1,6 @@
 {"loop": "present/record/metadata/oai_marc",
+  "varfield[@id='100']/subfield[@label='a']": {"prefix": "dct" , "property": "author", "class_uri": "http://example.com/" },
   "varfield[@id='245']/subfield[@label='a']": {"prefix": "dct" , "property": "title"},
-  "varfield[@id='100']/subfield[@label='a']": {"prefix": "dct" , "property": "author"}}
+  "varfield[@id='246']/subfield[@label='a']": {"prefix": "dct" , "property": "alternative"},
+  "$EXTRA": [{"prefix": "rdfs" , "property": "type", "value": {"prefix": "ex" , "property": "CreativeWork" }}]
+}

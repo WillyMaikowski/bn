@@ -1,9 +1,10 @@
-from ETL.T.transformer import Transformer
 import xml.etree.ElementTree as ET
 import json
 
+from ETL.T.transformer import Transformer
+
 xml = ET.parse("sample.xml")
-with open("config_mch.json", "r") as fp:
+with open("config_mch_person.json", "r") as fp:
     config = json.load(fp)
 t = Transformer(config, "http://example.com/", "book/author", {"foaf": "http://xmlns.com/foaf/0.1/"})
 g = t.transform(xml)

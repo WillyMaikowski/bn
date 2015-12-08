@@ -1,0 +1,4 @@
+{"loop": "article",
+  "properties/property/property-value[@pnid='525']": {"prefix": "dct" , "property": "publisher"},
+  "$EXTRA": [{"prefix": "rdfs" , "property": "type", "value": {"prefix": "dct" , "property": "Collection" }}]
+}
