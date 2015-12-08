@@ -15,10 +15,12 @@ authors.add_from_xml("data/000 - 999.xml")
 aleph_data = ET.fromstring("<aleph></aleph>")
 
 cnt = 0
+n_authors = len(authors)
 for author in authors:
     cnt += 1
-    if cnt == 2:
+    if cnt == 41:
         break
+    print str(cnt) + "/40"
     url = 'http://www.bncatalogo.cl/X'
     request = FindRequest(base_url=url)
     metadata = request.find(name=author)
@@ -41,11 +43,39 @@ for author in authors:
 aleph_xml = ET.ElementTree()
 aleph_xml._setroot(aleph_data)
 
+def preprocess_aleph(xml):
+    name_xpath = "present/record/metadata/oai_marc/varfield[@id='100']/subfield[@label='a']"
+    title_xpath = "present/record/metadata/oai_marc/varfield[@id='245']/subfield[@label='a']"
+    nick_xpath = "present/record/metadata/oai_marc/varfield[@id='245']/subfield[@label='c']"
+    alternative_xpath = "present/record/metadata/oai_marc/varfield[@id='246']/subfield[@label='a']"
+    references_xpath = "present/record/metadata/oai_marc/varfield[@id='600']/subfield[@label='a']"
+    contributor_xpath = "present/record/metadata/oai_marc/varfield[@id='700']/subfield[@label='a']"
+    for elem in xml.findall(name_xpath):
+        if elem.text[-1] == ",":
+            elem.text = elem.text[0:len(elem.text)-1]
+    for elem in xml.findall(title_xpath):
+        if elem.text[-1] == "/" or elem.text[-1] == ":":
+            elem.text = elem.text[0:len(elem.text)-1]
+        elem.text = elem.text.strip()
+    for elem in xml.findall(nick_xpath):
+        if elem.text[-1] == ".":
+            elem.text = elem.text[0:len(elem.text)-1]
+    # for elem in xml.findall(alternative_xpath):
+    for elem in xml.findall(references_xpath):
+        if elem.text[-1] == ",":
+            elem.text = elem.text[0:len(elem.text)-1]
+    for elem in xml.findall(contributor_xpath):
+        if elem.text[-1] == ",":
+            elem.text = elem.text[0:len(elem.text)-1]
+    return xml
+
+aleph_xml = preprocess_aleph(aleph_xml)
+
 
 print "---ALEPH WORK---"
 with open("config/config_aleph_work.json", "r") as fp:
     config = json.load(fp)
-t = Transformer(config, "http://example.com/", "varfield[@id='245']/subfield[@label='a']",
+t = Transformer(config, "http://example.com/obra/", "varfield[@id='245']/subfield[@label='a']",
                 {"dct": "http://purl.org/dc/terms/", "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
                  "ex": "http://example.com/"}
                 )
@@ -55,7 +85,7 @@ g.serialize(destination="output/output_aleph_work.ttl", format='turtle')
 print "---ALEPH AUTHORITY---"
 with open("config/config_aleph_authority.json", "r") as fp:
     config = json.load(fp)
-t = Transformer(config, "http://example.com/", "varfield[@id='100']/subfield[@label='a']",
+t = Transformer(config, "http://example.com/autoridad/", "varfield[@id='100']/subfield[@label='a']",
                 {"foaf": "http://xmlns.com/foaf/0.1/", "dct": "http://purl.org/dc/terms/",
                  "rdfs": "http://www.w3.org/2000/01/rdf-schema#", "ex": "http://example.com/"}
                 )
