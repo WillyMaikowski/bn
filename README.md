@@ -5,8 +5,9 @@ Proyecto de Web Semántica Biblioteca Nacional
 Requirements
 ------------
 
-Requires [RDFLib](https://github.com/RDFLib/rdflib "RDFLib")
-
+Requires:
+* [RDFLib](https://github.com/RDFLib/rdflib "RDFLib")
+* [Unidecode](https://pypi.python.org/pypi/Unidecode "Unidecode")
 Example
 -------
 
@@ -21,6 +22,11 @@ export PYTHONPATH=$PYTHONPATH:/<project_location>
 python examples/E/G2/find_and_present.py
 ```
 
+* To run the ETL, fill the data folder with the desired data to migrate and just run:
+```bash
+python main.py
+```
+
 Docs
 ----
 
@@ -28,5 +34,4 @@ Docs
 ![mapabn](https://cloud.githubusercontent.com/assets/2347656/10713882/2859ea6a-7aae-11e5-80d8-9829a27fdbce.png)
 
 Ontología actual (sujeta a modificaciones):
-![ontologia](https://cloud.githubusercontent.com/assets/2347656/10713883/2beabe84-7aae-11e5-9cd9-aebd3f3eb13d.png)
-Para la mayoría de las relaciones se puede usar [dct](http://dublincore.org/documents/dcmi-terms/).
+![ontologia](https://cloud.githubusercontent.com/assets/2347656/11640748/fbabd4d8-9d12-11e5-8630-86dc13b5eddd.jpg).
