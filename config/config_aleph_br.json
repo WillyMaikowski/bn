@@ -1,0 +1,7 @@
+{"loop": "present/record/metadata/oai_marc",
+  "varfield[@id='856']/subfield[@label='3']": {"prefix": "dct" , "property": "type"},
+  "varfield[@id='856']/subfield[@label='q']": {"prefix": "dct" , "property": "format"},
+  "varfield[@id='856']/subfield[@label='f']": {"prefix": "dct" , "property": "source"},
+  "varfield[@id='245']/subfield[@label='a']": {"prefix": "dct" , "property": "isFormatOf", "class_uri": "http://datos.bn.cl/recurso/obra/"},
+  "$EXTRA": [{"prefix": "rdfs" , "property": "type", "value": {"prefix": "dct" , "property": "BibiographicResource" }}]
+}

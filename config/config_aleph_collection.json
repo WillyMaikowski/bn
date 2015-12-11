@@ -1,0 +1,4 @@
+{"loop": "present/record/metadata/oai_marc",
+  "varfield[@id='650']/subfield[@label='a']": {"prefix": "dct" , "property": "title"},
+  "$EXTRA": [{"prefix": "rdfs" , "property": "type", "value": {"prefix": "dct" , "property": "Collection" }}]
+}
