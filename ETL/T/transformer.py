@@ -84,7 +84,7 @@ class Transformer(object):
                     )
                     resource_object = rdf.term.URIRef(resource_uri)
                 else:
-                    resource_object = rdf.Literal(values[i][j][1].text.strip().lower())
+                    resource_object = rdf.Literal(values[i][j][1].text.strip())
                 graph.add((subject, predicate, resource_object))
             if "$EXTRA" in self.config:
                 for extra in self.config["$EXTRA"]:

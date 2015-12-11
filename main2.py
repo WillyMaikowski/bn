@@ -14,10 +14,12 @@ authors.add_from_xml("data/000 - 999.xml")
 
 aleph_data = ET.fromstring("<aleph></aleph>")
 cnt = 0
+total = 10
 for author in authors:
     cnt += 1
-    if cnt == 5:
+    if cnt == total:
         break
+    print "Loading authors: " + str(100*cnt/total) + "%"
     url = 'http://www.bncatalogo.cl/X'
     request = FindRequest(base_url=url)
     metadata = request.find(name=author)
@@ -34,9 +36,56 @@ for author in authors:
         author_data.append(request.get_chunk())
     for elem in author_data:
         aleph_data.append(elem)
-
+print "Authors 100% loaded."
 aleph_xml = ET.ElementTree()
 aleph_xml._setroot(aleph_data)
+
+def preprocess_aleph(xml):
+    base_xpath = "present/record/metadata/oai_marc/"
+    name_xpath = base_xpath + "varfield[@id='100']/subfield[@label='a']"
+    org_xpath = base_xpath + "varfield[@id='110']/subfield[@label='a']"
+    title_xpath = base_xpath + "varfield[@id='245']/subfield[@label='a']"
+    nick_xpath = base_xpath + "varfield[@id='245']/subfield[@label='c']"
+    alternative_xpath = base_xpath + "varfield[@id='246']/subfield[@label='a']"
+    references_xpath = base_xpath + "varfield[@id='600']/subfield[@label='a']"
+    contributor_xpath = base_xpath + "varfield[@id='700']/subfield[@label='a']"
+    for elem in xml.findall(name_xpath):
+        elem.text = elem.text.replace(".","")
+        if elem.text[-1] == ",":
+            elem.text = elem.text[0:len(elem.text)-1]
+        name_parts = elem.text.split(", ")
+        if len(name_parts) == 2:
+            elem.text = name_parts[1] + " " + name_parts[0]
+    for elem in xml.findall(org_xpath):
+        if elem.text[-1] == ".":
+            elem.text = elem.text[0:len(elem.text)-1]
+    for elem in xml.findall(title_xpath):
+        if elem.text[-1] == "/" or elem.text[-1] == ":":
+            elem.text = elem.text[0:len(elem.text)-1]
+        elem.text = elem.text.strip()
+    for elem in xml.findall(nick_xpath):
+        elem.text = elem.text.replace(".","")
+        if elem.text[-1] == ".":
+            elem.text = elem.text[0:len(elem.text)-1]
+    # for elem in xml.findall(alternative_xpath):
+    for elem in xml.findall(references_xpath):
+        elem.text = elem.text.replace(".","")
+        if elem.text[-1] == ",":
+            elem.text = elem.text[0:len(elem.text)-1]
+        name_parts = elem.text.split(", ")
+        if len(name_parts) == 2:
+            elem.text = name_parts[1] + " " + name_parts[0]
+    for elem in xml.findall(contributor_xpath):
+        elem.text = elem.text.replace(".","")
+        if elem.text[-1] == ",":
+            elem.text = elem.text[0:len(elem.text)-1]
+        name_parts = elem.text.split(", ")
+        if len(name_parts) == 2:
+            elem.text = name_parts[1] + " " + name_parts[0]
+    return xml
+
+aleph_xml = preprocess_aleph(aleph_xml)
+
 # Person Output
 with open("config/config_aleph_person.json", "r") as fp:
    config = json.load(fp)
@@ -46,6 +95,7 @@ t = Transformer(config, "http://datos.bn.cl/recurso/persona/",
                )
 g = t.transform(aleph_xml)
 g.serialize(destination="output/aleph_person.ttl", format='turtle')
+print "Person loaded to TTL."
 # Organization Output
 with open("config/config_aleph_organization.json", "r") as fp:
    config = json.load(fp)
@@ -55,6 +105,7 @@ t = Transformer(config, "http://datos.bn.cl/recurso/institucion/",
                )
 g = t.transform(aleph_xml)
 g.serialize(destination="output/aleph_organization.ttl", format='turtle')
+print "Organization loaded to TTL."
 # CreativeWork Output
 with open("config/config_aleph_creativework.json", "r") as fp:
    config = json.load(fp)
@@ -64,6 +115,7 @@ t = Transformer(config, "http://datos.bn.cl/recurso/obra/",
                )
 g = t.transform(aleph_xml)
 g.serialize(destination="output/aleph_creativework.ttl", format='turtle')
+print "CreativeWork loaded to TTL."
 # Collection Output
 with open("config/config_aleph_collection.json", "r") as fp:
    config = json.load(fp)
@@ -73,6 +125,7 @@ t = Transformer(config, "http://datos.bn.cl/recurso/tema/",
                )
 g = t.transform(aleph_xml)
 g.serialize(destination="output/aleph_collection.ttl", format='turtle')
+print "Collection loaded to TTL."
 # BibliographicResource Output
 with open("config/config_aleph_br.json", "r") as fp:
    config = json.load(fp)
@@ -82,53 +135,4 @@ t = Transformer(config, "http://datos.bn.cl/recurso/material_digital/",
                )
 g = t.transform(aleph_xml)
 g.serialize(destination="output/aleph_br.ttl", format='turtle')
-'''
-xml = ET.parse("data/000 - 999.xml")
-with open("config/config_mch_person.json", "r") as fp:
-    config = json.load(fp)
-t = Transformer(config, "http://example.com/", "property/property-value[@pnid='551']",
-                {"foaf": "http://xmlns.com/foaf/0.1/", "rdfs": "http://www.w3.org/2000/01/rdf-schema#"}
-                )
-g = t.transform(xml)
-g.serialize(destination="output/output_mch_person.ttl", format='turtle')
-
-xml = ET.parse("data/000 - 999.xml")
-with open("config/config_mch_work.json", "r") as fp:
-    config = json.load(fp)
-t = Transformer(config, "http://example.com/", "name",
-                {"foaf": "http://xmlns.com/foaf/0.1/", "dct": "http://purl.org/dc/terms/",
-                 "rdfs": "http://www.w3.org/2000/01/rdf-schema#", "ex": "http://example.com/"}
-                )
-g = t.transform(xml)
-g.serialize(destination="output/output_mch_work.ttl", format='turtle')
-
-xml = ET.parse("data/000 - 999.xml")
-with open("config/config_mch_br.json", "r") as fp:
-    config = json.load(fp)
-t = Transformer(config, "http://example.com/", "name",
-                {"foaf": "http://xmlns.com/foaf/0.1/", "dct": "http://purl.org/dc/terms/",
-                 "rdfs": "http://www.w3.org/2000/01/rdf-schema#", "ex": "http://example.com/"}
-                )
-g = t.transform(xml)
-g.serialize(destination="output/output_mch_br.ttl", format='turtle')
-
-xml = ET.parse("data/000 - 999.xml")
-with open("config/config_mch_cat.json", "r") as fp:
-    config = json.load(fp)
-t = Transformer(config, "http://example.com/", "properties/property/property-value[@pnid='522']",
-                {"foaf": "http://xmlns.com/foaf/0.1/", "dct": "http://purl.org/dc/terms/",
-                 "rdfs": "http://www.w3.org/2000/01/rdf-schema#", "ex": "http://example.com/"}
-                )
-g = t.transform(xml)
-g.serialize(destination="output/output_mch_cat.ttl", format='turtle')
-
-xml = ET.parse("data/000 - 999.xml")
-with open("config/config_mch_tema.json", "r") as fp:
-    config = json.load(fp)
-t = Transformer(config, "http://example.com/", "properties/property/property-value[@pnid='525']",
-                {"foaf": "http://xmlns.com/foaf/0.1/", "dct": "http://purl.org/dc/terms/",
-                 "rdfs": "http://www.w3.org/2000/01/rdf-schema#", "ex": "http://example.com/"}
-                )
-g = t.transform(xml)
-g.serialize(destination="output/output_mch_tema.ttl", format='turtle')
-'''
+print "BibliographicResource loaded to TTL."
