@@ -49,6 +49,16 @@ def preprocess_aleph(xml):
     alternative_xpath = base_xpath + "varfield[@id='246']/subfield[@label='a']"
     references_xpath = base_xpath + "varfield[@id='600']/subfield[@label='a']"
     contributor_xpath = base_xpath + "varfield[@id='700']/subfield[@label='a']"
+    br1_xpath = base_xpath + "varfield[@id='856']/subfield[@label='a']"
+    br2_xpath = base_xpath + "varfield[@id='856']/subfield[@label='d']"
+    br3_xpath = base_xpath + "varfield[@id='856']/subfield[@label='f']"
+    br_uri1 = xml.findall(br1_xpath)
+    br_uri2 = xml.findall(br2_xpath)
+    br_uri3 = xml.findall(br3_xpath)
+    br_uri_largo = len(br_uri1)
+    for i in range(0, br_uri_largo-1):
+        br_uri1[i].text = br_uri1[i].text + br_uri2[i].text + br_uri3[i].text
+        br_uri3[i].text = br_uri3[i].text.replace(".","_")
     for elem in xml.findall(name_xpath):
         elem.text = elem.text.replace(".","")
         if elem.text[-1] == ",":
