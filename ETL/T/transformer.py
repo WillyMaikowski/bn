@@ -38,6 +38,7 @@ class Transformer(object):
         for element in author_elements:
             a_list = []
             for xpath in xpaths:
+                #TODO aqui debería ir findAll
                 value = element.find(xpath)
                 a_list.append((self.config[xpath], value))
             if len(a_list) == 0:
