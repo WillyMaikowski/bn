@@ -2,6 +2,12 @@
 	<div class="container">
   	<h4 class="text-uppercase">/recurso/{$tipo}</h4>
   	<h2>{$nombre?$nombre:$id}</h2>
+	<p>
+		<a href="{$url}?format=application%2Fsparql-results%2Bjson" class="label label-default">json</a>
+		<a href="{$url}?format=text%2Fturtle" class="label label-default">ttl</a>
+		<a href="{$url}?format=application%2Fsparql-results%2Bxml" class="label label-default">xml</a>
+		<a href="{$url}?format=text%2Fcsv" class="label label-default">csv</a>
+	</p>	
 	</div>
 </header>
 
@@ -9,12 +15,12 @@
 <div class="container">
   <div class="row">
     <div class="col-lg-12 text-center">
-  		<h3>Perfil</h3>
+  		<h3>Triplas</h3>
 		</div>
 	</div>
   <div class="row">
     <div class="col-lg-6">
-      <p class=""><strong>Nombre: </strong>{$nombre}</p>
+      <!-- /*<p class=""><strong>Nombre: </strong>{$nombre}</p>*/ -->
       <!-- foreach( $res['results']['bindings'] as $v ) { -->
 				<!-- $test = ! $v['c'] || $v['c']['value'] == $url; -->
 				<!-- $c = $test ? $v['a'] : $v['c']; -->

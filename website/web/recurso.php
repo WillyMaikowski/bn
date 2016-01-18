@@ -1,5 +1,7 @@
 <?php
 require( 'config.php' );
+//error_reporting( -1 );
+//ini_set("display_errors", 1);
 
 $_recurso = array();
 if( isset( $_REQUEST['r'] ) ) {

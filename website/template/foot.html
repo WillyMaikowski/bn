@@ -3,22 +3,21 @@
 			<div class="container">
 				<div class="row">
 					<div class="footer-col col-md-4">
-						<h3>Location</h3>
-						<p>3481 Melrose Place<br>Beverly Hills, CA 90210</p>
+						<h3>Ubicación</h3>
+						<p>Libertador Bernardo O'Higgins 651<br/> Santiago, Chile</p>
 					</div>
 					<div class="footer-col col-md-4">
-						<h3>Around the Web</h3>
+						<h3>Contacto</h3>
 						<ul class="list-inline">
-							<li><a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-facebook"></i></a></li>
-							<li><a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-google-plus"></i></a></li>
-							<li><a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-twitter"></i></a></li>
-							<li><a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-linkedin"></i></a></li>
-							<li><a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-dribbble"></i></a></li>
+							<li><a href="https://www.facebook.com/BibliotecaNacionaldeChile" class="btn-social btn-outline"><i class="fa fa-fw fa-facebook"></i></a></li>
+							<li><a href="https://twitter.com/BNChile" class="btn-social btn-outline"><i class="fa fa-fw fa-twitter"></i></a></li>
+							<li><a href="mailto:biblioteca.nacional@bndechile.cl" class="btn-social btn-outline"><i class="fa fa-fw fa-envelope"></i></a></li>
+							<li><a href="tel:+56223605400" class="btn-social btn-outline"><i class="fa fa-fw fa-phone"></i></a></li>
 						</ul>
 					</div>
 					<div class="footer-col col-md-4">
-						<h3>About Freelancer</h3>
-						<p>Freelance is a free to use, open source Bootstrap theme created by <a href="http://startbootstrap.com">Start Bootstrap</a>.</p>
+						<h3>Acerca</h3>
+						<p><a href="http://datos.bn.cl">datos.bn.cl</a> es un proyecto de investigación de <a href="http://www.bibliotecanacional.cl/">Biblioteca Nacional</a>.</p>
 					</div>
 				</div>
 			</div>
