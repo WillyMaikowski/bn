@@ -8,6 +8,7 @@ Requirements
 Requires:
 * [RDFLib](https://github.com/RDFLib/rdflib "RDFLib")
 * [Unidecode](https://pypi.python.org/pypi/Unidecode "Unidecode")
+* [Requests](https://pypi.python.org/pypi/requests "Requests")
 Example
 -------
 
